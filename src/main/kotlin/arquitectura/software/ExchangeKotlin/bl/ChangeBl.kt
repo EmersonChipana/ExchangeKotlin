@@ -1,5 +1,7 @@
 package arquitectura.software.ExchangeKotlin.bl
 
+import arquitectura.software.ExchangeKotlin.dao.ExchangeDao
+import arquitectura.software.ExchangeKotlin.dao.repository.ExchangeRepository
 import java.math.BigDecimal
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -19,7 +21,9 @@ import com.squareup.okhttp.Request
 import com.squareup.okhttp.Response
 
 @Service
-class ChangeBl {
+class ChangeBl (private val exchangeRepository: ExchangeRepository) {
+
+
 
     private val logger: Logger = LoggerFactory.getLogger(ChangeBl::class.java)
 
@@ -33,6 +37,13 @@ class ChangeBl {
         validateValues(from, to, amount)
         val response = requestApi(from, to, amount)
         val requestDto = parseResponse(response, RequestDto::class.java)
+        val exchange = ExchangeDao()
+        exchange.from = from
+        exchange.to = to
+        exchange.amount = amount
+        exchange.result = requestDto.result
+        exchange.date = requestDto.date
+        exchangeRepository.save(exchange)
         return ResponseEntity.ok(requestDto.toString())
     }
 
@@ -53,6 +64,7 @@ class ChangeBl {
 
     fun requestApi(from: String, to: String, amount: BigDecimal): Response {
         val client = OkHttpClient()
+        logger.info("Se realizara la peticion al servicio")
         val request: Request = Request.Builder()
             .url("$apiUrl?to=$to&from=$from&amount=$amount")
             .addHeader("apikey", apiKey)
@@ -61,8 +73,8 @@ class ChangeBl {
             val response = client.newCall(request).execute()
             if (response.code() != 200) {
                 val error = parseResponse(response, ErrorDto::class.java)
-                logger.error("Ocurrio un error aqui: " + error.error?.message)
-                throw RuntimeException("Ocurrio un error: " + error.error?.message)
+                logger.error("Ocurrio un error con el servicio: " + error.error?.message)
+                throw RuntimeException("Ocurrio un error con el servicio: " + error.error?.message)
             }
             response
         } catch (e: IOException) {

@@ -1,3 +1,20 @@
 api:
   key: "Vbb6s2cv4bOnsoaKUrNBqnpkwFVcEwsD"
   url: "https://api.apilayer.com/exchangerates_data/convert"
+
+
+server:
+  port: 8080
+
+
+spring:
+  datasource:
+    type: org.postgresql.jdbc2.optional.SimpleDataSource
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/software
+  jpa:
+    hibernate:
+      ddl-auto: update
+  application:
+    name: exchange-rate

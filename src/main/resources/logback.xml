@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <appender name="rollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/c/Users/emers/Documents/Logs/Exchange.log</file>
+        <file>/home/emerson/Documentos/KotlinLogs/Exchange.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>ExchangeKotlin-%d{yyyy-MM-dd}.txt</fileNamePattern>
             <maxHistory>365</maxHistory>

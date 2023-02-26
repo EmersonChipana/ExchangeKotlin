@@ -34,13 +34,9 @@ class MyexceptionHandler {
 class ChangeApi (private val changeBl: ChangeBl) {
 
     val logger: Logger = LoggerFactory.getLogger(ChangeApi::class.java)
-
     @GetMapping("/get")
     fun getExchange(@RequestParam from: String, @RequestParam to: String, @RequestParam amount: BigDecimal): ResponseEntity<String> {
         logger.info("Se recibio la peticion de cambio de moneda")
         return changeBl.getExchange(from, to, amount)
     }
-
-
-
 }

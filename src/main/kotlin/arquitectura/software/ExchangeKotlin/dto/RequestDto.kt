@@ -15,6 +15,6 @@ data class RequestDto(val date: Date, val query: QueryDto, val result: BigDecima
     )
 
     override fun toString(): String {
-        return "RequestDto(date=$date, query=$query, result=$result, success=$success)"
+        return "RequestDto{date=$date query=$query, result=$result, success=$success)"
     }
 }
