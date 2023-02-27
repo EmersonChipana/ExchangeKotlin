@@ -19,9 +19,10 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import com.squareup.okhttp.Response
+import org.springframework.beans.factory.annotation.Autowired
 
 @Service
-class ChangeBl (private val exchangeRepository: ExchangeRepository) {
+class ChangeBl @Autowired constructor(private val exchangeRepository: ExchangeRepository) {
 
 
 
@@ -38,12 +39,13 @@ class ChangeBl (private val exchangeRepository: ExchangeRepository) {
         val response = requestApi(from, to, amount)
         val requestDto = parseResponse(response, RequestDto::class.java)
         val exchange = ExchangeDao()
-        exchange.from = from
-        exchange.to = to
+        exchange.ExchangeFrom = from
+        exchange.ExchangeTo= to
         exchange.amount = amount
         exchange.result = requestDto.result
         exchange.date = requestDto.date
         exchangeRepository.save(exchange)
+        logger.info("Se guardo la informacion en la base de datos")
         return ResponseEntity.ok(requestDto.toString())
     }
 

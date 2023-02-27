@@ -11,8 +11,8 @@ import javax.persistence.GeneratedValue
 @Entity
 @Table(name = "exchange")
 class ExchangeDao(
-    var from: String,
-    var to: String,
+    var ExchangeFrom: String,
+    var ExchangeTo: String,
     var amount: BigDecimal,
     var result: BigDecimal,
     var date: Date,
