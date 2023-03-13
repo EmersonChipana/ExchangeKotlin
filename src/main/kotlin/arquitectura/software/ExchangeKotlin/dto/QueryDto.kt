@@ -8,7 +8,4 @@ data class QueryDto(
     val amount: BigDecimal?){
     constructor() : this(null, null, null)
 
-    override fun toString(): String {
-        return "QueryDto(from=$from, to=$to, amount=$amount)"
-    }
 }

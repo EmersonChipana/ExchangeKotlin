@@ -20,6 +20,8 @@ import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import com.squareup.okhttp.Response
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 
 @Service
 class ChangeBl @Autowired constructor(private val exchangeRepository: ExchangeRepository) {
@@ -34,7 +36,7 @@ class ChangeBl @Autowired constructor(private val exchangeRepository: ExchangeRe
     @Value("\${api.key}")
     private lateinit var apiKey: String
 
-    fun getExchange(from: String, to: String, amount: BigDecimal): ResponseEntity<String> {
+    fun getExchange(from: String, to: String, amount: BigDecimal): RequestDto {
         validateValues(from, to, amount)
         val response = requestApi(from, to, amount)
         val requestDto = parseResponse(response, RequestDto::class.java)
@@ -46,7 +48,7 @@ class ChangeBl @Autowired constructor(private val exchangeRepository: ExchangeRe
         exchange.date = requestDto.date
         exchangeRepository.save(exchange)
         logger.info("Se guardo la informacion en la base de datos")
-        return ResponseEntity.ok(requestDto.toString())
+        return requestDto
     }
 
     private fun validateValues(from: String, to: String, amount: BigDecimal) {
@@ -95,4 +97,14 @@ class ChangeBl @Autowired constructor(private val exchangeRepository: ExchangeRe
             throw RuntimeException("Ocurrio un error: " + e.message)
         }
     }
+
+    fun getExchangeHistory(page: Int, size: Int): ResponseEntity<Any>{
+        val paginacion = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "date"))
+        val datos = exchangeRepository.findAll(paginacion)
+        logger.info("Se obtuvo la informacion de la base de datos")
+        return ResponseEntity.ok(datos)
+    }
+
+
+
 }

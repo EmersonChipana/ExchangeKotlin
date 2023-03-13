@@ -6,15 +6,12 @@ import java.util.Date
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class RequestDto(val date: Date, val query: QueryDto, val result: BigDecimal,  val success: Boolean){
+data class RequestDto(val date: String, val query: QueryDto, val result: BigDecimal,  val success: Boolean){
     constructor() : this(
-        Date(),
+        "",
         QueryDto("", "", BigDecimal(0)),
         BigDecimal.ZERO,
         false
     )
 
-    override fun toString(): String {
-        return "RequestDto{date=$date query=$query, result=$result, success=$success)"
-    }
 }

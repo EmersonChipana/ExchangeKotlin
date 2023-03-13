@@ -15,10 +15,10 @@ class ExchangeDao(
     var ExchangeTo: String,
     var amount: BigDecimal,
     var result: BigDecimal,
-    var date: Date,
+    var date: String,
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long = 0
 ){
-    constructor() : this("", "", BigDecimal.ZERO, BigDecimal.ZERO, Date())
+    constructor() : this("", "", BigDecimal.ZERO, BigDecimal.ZERO, "")
 }
