@@ -3,7 +3,7 @@ api:
   url: ${URL:https://api.apilayer.com/exchangerates_data/convert}
 
 server:
-  port: 8080
+  port: 8008
 
 spring:
   datasource:
@@ -17,4 +17,23 @@ spring:
   application:
     name: exchange-rate
 
-
+keycloak:
+  auth-server-url: http://localhost:8080
+  autodetect-bearer-only: true
+  realm: software
+  ssl-required: external
+  resource: backend
+  credentials:
+    secret: 72xuVAqsgabN04EwWPM0o1LQvWxFnsi9
+  use-resource-role-mappings: false
+  security-constraints:
+    - auth-roles:
+        - admin
+        - user
+      security-collections:
+        - name: SERVICIOS DE ADMINISTRADOR
+          omitted-methods:
+            - OPTIONS
+          patterns:
+            - /api/v1/exchange/get
+            - /api/v1/exchange/getall

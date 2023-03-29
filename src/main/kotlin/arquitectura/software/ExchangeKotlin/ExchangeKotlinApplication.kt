@@ -7,9 +7,5 @@ import org.springframework.boot.runApplication
 class ExchangeKotlinApplication
 
 fun main(args: Array<String>) {
-	try{
-		runApplication<ExchangeKotlinApplication>(*args)
-	} catch (e: Exception) {
-		println("Error: ${e.message}")
-	}
+	runApplication<ExchangeKotlinApplication>(*args)
 }

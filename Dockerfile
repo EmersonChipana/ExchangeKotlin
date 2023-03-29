@@ -1,5 +1,21 @@
+FROM eclipse-temurin:11.0.18_10-jdk-alpine as build
+WORKDIR /workspace/app
+
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+COPY src src
+
+RUN sh ./mvnw install -DskipTests
+RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+
 FROM eclipse-temurin:11
-COPY target/*.jar app.jar
+
+VOLUME /tmp
+ARG DEPENDENCY=/workspace/app/target/dependency
+COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 
 ENV POSTGRES_USER "postgres"
 ENV POSTGRES_PASSWORD "postgres"
@@ -7,4 +23,4 @@ ENV POSTGRES_URL "jdbc:postgresql://localhost:5432/postgres"
 ENV API_KEY ""
 ENV URL "https://api.apilayer.com/exchangerates_data/convert"
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","arquitectura.software.ExchangeKotlin.ExchangeKotlinApplicationKt"]
