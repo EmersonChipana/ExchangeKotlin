@@ -1,4 +1,13 @@
 
+networks:
+  edcl-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.7.0.0/16
+          gateway: "${GATEWAY}"
+
 services:
   postgres:
     image: postgres:15
@@ -8,13 +17,13 @@ services:
     environment:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     volumes:
-      - /home/emerson/Documentos/Postgres:/var/lib/postgresql/data
+      - /home/emer/Documents/Postgres:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - edcl-network
 
   exchange-rate:
-    image: exchange-rate:4.0.0
+    image: exchange-rate:6.0.0
     mem_limit: 1024m
     restart: always
     ports:
@@ -25,28 +34,22 @@ services:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       URL: "${URL}"
+    volumes:
+      - /home/emer/Documents/KotlinLogs:/home/emer/Documents/KotlinLogs
     depends_on:
       - postgres
     networks:
       - edcl-network
 
   angular-exchange:
-    image: angular-exchange:4.0.0
+    image: angular-exchange:5.0.0
     ports:
       - "4200:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
-        - exchange-rate
+      - exchange-rate
     restart: always
     networks:
       - edcl-network
 
-networks:
-    edcl-network:
-      driver: bridge
-      ipam:
-        driver: default
-        config:
-          - subnet: 172.7.0.0/16
-            gateway: 172.7.0.1

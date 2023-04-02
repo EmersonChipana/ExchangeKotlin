@@ -18,13 +18,13 @@ spring:
     name: exchange-rate
 
 keycloak:
-  auth-server-url: http://localhost:8080
+  auth-server-url: http://192.168.0.9:8080
   autodetect-bearer-only: true
   realm: software
-  ssl-required: external
+  ssl-required: none
   resource: backend
   credentials:
-    secret: 72xuVAqsgabN04EwWPM0o1LQvWxFnsi9
+    secret: hqxXhNfuvAPZCjOkLR4QagUzwZbBGxFT
   use-resource-role-mappings: false
   security-constraints:
     - auth-roles:
