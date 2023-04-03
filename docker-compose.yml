@@ -23,7 +23,7 @@ services:
       - edcl-network
 
   exchange-rate:
-    image: exchange-rate:6.0.0
+    image: exchange-rate:7.0.0
     mem_limit: 1024m
     restart: always
     ports:
@@ -42,7 +42,7 @@ services:
       - edcl-network
 
   angular-exchange:
-    image: angular-exchange:5.0.0
+    image: angular-exchange:6.0.0
     ports:
       - "4200:80"
     volumes:
