@@ -3,10 +3,10 @@
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/home/emer/Documents/KotlinLogs/Logs.log</file>
+        <file>/home/emer/Documents/KLogs/Logs.log</file>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/home/emer/Documents/KotlinLogs/Logs-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>/home/emer/Documents/KLogs/Logs-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>5MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>

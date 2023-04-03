@@ -8,4 +8,4 @@ GET https://pokeapi.co/api/v2/pokemon/ditto
 
 
 ### Pokemon API
-GET http://localhost:8008/api/v1/pokemon?name=ditto
+GET http://localhost:8008/api/v1/pokemon?name=

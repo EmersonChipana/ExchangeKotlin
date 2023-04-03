@@ -17,8 +17,8 @@ class PokemonAdapter: Pokemon {
         id = pokemonDto.id
         name = pokemonDto.name
         type = pokemonDto.types[0].type.name
-        weight = pokemonDto.weight.toDouble()
-        height = pokemonDto.height.toDouble()
+        weight = pokemonDto.weight.toDouble()/10
+        height = pokemonDto.height.toDouble()/10
         image = pokemonDto.sprites.front_default
     }
 

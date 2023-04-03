@@ -18,7 +18,7 @@ spring:
     name: exchange-rate
 
 keycloak:
-  auth-server-url: http://192.168.0.9:8080
+  auth-server-url: ${KEYCLOAK_URL:http://localhost:8080}
   autodetect-bearer-only: true
   realm: software
   ssl-required: none
@@ -28,12 +28,18 @@ keycloak:
   use-resource-role-mappings: false
   security-constraints:
     - auth-roles:
-        - admin
         - user
+      security-collections:
+        - name: SERVICIOS DE USUARIO
+          omitted-methods:
+            - OPTIONS
+          patterns:
+            - /api/v1/exchange/get
+    - auth-roles:
+        - admin
       security-collections:
         - name: SERVICIOS DE ADMINISTRADOR
           omitted-methods:
             - OPTIONS
           patterns:
-            - /api/v1/exchange/get
             - /api/v1/exchange/getall
